@@ -41,14 +41,14 @@ resource "google_compute_instance" "vm_instance" {
     network = "${var.instance_subnetwork}"
     access_config {
       # Allocate a one-to-one NAT IP to the instance
-      nat_ip = google_compute_address.static.address
+      nat_ip = "${google_compute_address.static.address}"
       # network_tier="STANDARD"  # PREMIUM or STANDARD. If this field is not specified, it is assumed to be PREMIUM.
     }
   }
 }
 
 output "instance_ip_addr" {
-  value       = google_compute_address.static.address
+  value       = "${google_compute_address.static.address}"
   description = "The private IP address of the main server instance."
 }
 

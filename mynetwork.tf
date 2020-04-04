@@ -11,7 +11,7 @@ resource "google_compute_network" "mynetwork" {
 # Add a firewall rule to allow HTTP, SSH, RDP, and ICMP traffic on mynetwork
 resource "google_compute_firewall" "mynetwork-allow-http-ssh-rdp-icmp" {
   name    = "mynetwork-tf-allow-http-ssh-rdp-icmp"
-  network = google_compute_network.mynetwork.self_link
+  network = "${google_compute_network.mynetwork.self_link}"
   allow {
     protocol = "tcp"
     ports    = ["22", "80", "8080"]
@@ -30,7 +30,7 @@ module "jenkins-vm" {
   instance_type       = "n1-standard-2"
   image               = "ubuntu-os-cloud/ubuntu-1804-lts"
 #  startup_script      = "${var.init_scrip_docker}"
-  instance_subnetwork = google_compute_network.mynetwork.self_link
+  instance_subnetwork = "${google_compute_network.mynetwork.self_link}"
 }
 
 # Create the web-deploy-vm" instance
@@ -42,7 +42,7 @@ module "web-deploy-vm" {
   instance_type       = "n1-standard-1"
   image               = "ubuntu-os-cloud/ubuntu-1804-lts"
 #  startup_script      = "${var.init_scrip_apache2}"
-  instance_subnetwork = google_compute_network.mynetwork.self_link
+  instance_subnetwork = "${google_compute_network.mynetwork.self_link}"
 }
 
 
@@ -105,7 +105,8 @@ resource "null_resource" "execute" {
        "sudo apt install openjdk-8-jdk -y",
        "echo JAVA_HOME=\"/usr/lib/jvm/java-8-openjdk-amd64/jre\" | sudo tee -a /etc/environment",
        # Instalacion de Node JS
-       "sudo apt install nodejs -y", 
+       "curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -", 
+       "sudo apt-get install -y nodejs",
        "sudo apt install npm -y"
 
       ]
