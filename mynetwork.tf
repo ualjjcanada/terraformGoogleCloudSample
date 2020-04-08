@@ -63,7 +63,7 @@ resource "null_resource" "execute" {
        "sudo apt-get upgrade -y",
        "sudo apt-get install -y python-minimal",
        "sudo timedatectl set-timezone Europe/Madrid",
-       ##       "sudo reboot -h now"       
+       # Instalacion de docker
        "sudo apt install apt-transport-https ca-certificates curl software-properties-common -y",
        "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -", 
        "sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'",
@@ -73,7 +73,6 @@ resource "null_resource" "execute" {
       ]
     on_failure = "continue"
   }
-
 
 
  provisioner "remote-exec" {
@@ -91,14 +90,14 @@ resource "null_resource" "execute" {
        "sudo apt-get upgrade -y",
        "sudo apt-get install -y python-minimal",
        "sudo timedatectl set-timezone Europe/Madrid",
-       # Instalación de docker       
+       # Instalacion de docker       
        "sudo apt install apt-transport-https ca-certificates curl software-properties-common -y",
        "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -", 
        "sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'",
        "sudo apt update -y", 
        "sudo apt install docker-ce -y",
        "sudo usermod -aG docker $${USER}",
-       # Instalación de docker compose
+       # Instalacion de docker composer
        "sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose",
        "sudo chmod +x /usr/local/bin/docker-compose",
        # Instalacion de Java jdk 8
