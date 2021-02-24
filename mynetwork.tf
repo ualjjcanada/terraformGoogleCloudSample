@@ -71,7 +71,7 @@ resource "null_resource" "execute" {
       "sudo apt install docker-ce -y",
       "sudo usermod -aG docker $${USER}",
     ]
-    on_failure = "continue"
+    on_failure = continue
   }
 
 
@@ -109,7 +109,7 @@ resource "null_resource" "execute" {
       "sudo apt install npm -y"
 
     ]
-    on_failure = "continue"
+    on_failure = continue
   }
   depends_on = [
     # Init script must be created before this IP address could

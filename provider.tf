@@ -8,7 +8,16 @@ variable "gcp_project" {
   default = "cnsa-2020"
 }
 
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "3.58.0"
+    }
+  }
+}
 provider "google" {
   project = var.gcp_project
   region  = "us-central1"
+  zone    = "us-central1-c"
 }
