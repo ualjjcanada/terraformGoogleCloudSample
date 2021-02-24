@@ -1,4 +1,5 @@
 # Basic Example
+__Upgraded to Terraform v0.14__
 Create network, firewall rule and two virtual machines using a module definition.
 Based on lab titled Automating the Deployment of Networks with Terraform on QwikLabs.com
 
