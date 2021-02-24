@@ -104,7 +104,7 @@ resource "null_resource" "execute" {
       "sudo apt install openjdk-8-jdk -y",
       "echo JAVA_HOME=\"/usr/lib/jvm/java-8-openjdk-amd64/jre\" | sudo tee -a /etc/environment",
       # Instalacion de Node JS
-      "curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -",
+      "curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -",
       "sudo apt-get install -y nodejs",
       "sudo apt install npm -y"
 
