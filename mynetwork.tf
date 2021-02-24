@@ -1,16 +1,16 @@
 # Para mas detalles (opocional): export TF_LOG=TRACE
-
+## ejecucion 2 ualjjcanada
 
 # Create the mynetwork network
 resource "google_compute_network" "mynetwork" {
-  name                    = "mynetwork-tf"
+  name                    = "mynetwork2-tf"
   auto_create_subnetworks = "true"
   project                 = var.gcp_project
 }
 
 # Add a firewall rule to allow HTTP, SSH, RDP, and ICMP traffic on mynetwork
 resource "google_compute_firewall" "mynetwork-allow-http-ssh-rdp-icmp" {
-  name    = "mynetwork-tf-allow-http-ssh-rdp-icmp"
+  name    = "mynetwork2-tf-allow-http-ssh-rdp-icmp"
   network = google_compute_network.mynetwork.self_link
   allow {
     protocol = "tcp"
@@ -22,9 +22,9 @@ resource "google_compute_firewall" "mynetwork-allow-http-ssh-rdp-icmp" {
 }
 
 # Create the jenkins-vm instance
-module "jenkins-vm" {
+module "jenkins-vm2" {
   source          = "./instance"
-  instance_name   = "jenkins-vm-tf"
+  instance_name   = "jenkins-vm2-tf"
   instance_region = "us-central1"
   instance_zone   = "us-central1-a"
   instance_type   = "n1-standard-2"
@@ -34,9 +34,9 @@ module "jenkins-vm" {
 }
 
 # Create the web-deploy-vm" instance
-module "web-deploy-vm" {
+module "web-deploy-vm2" {
   source          = "./instance"
-  instance_name   = "web-deploy-vm-tf"
+  instance_name   = "web-deploy-vm2-tf"
   instance_region = "us-central1"
   instance_zone   = "us-central1-a"
   instance_type   = "n1-standard-1"
@@ -50,7 +50,7 @@ resource "null_resource" "execute" {
 
   provisioner "remote-exec" {
     connection {
-      host        = module.jenkins-vm.instance_ip_addr
+      host        = module.jenkins-vm2.instance_ip_addr
       type        = "ssh"
       user        = "ubuntu"
       private_key = file("~/.ssh/id_rsa")
@@ -77,7 +77,7 @@ resource "null_resource" "execute" {
 
   provisioner "remote-exec" {
     connection {
-      host        = module.web-deploy-vm.instance_ip_addr
+      host        = module.web-deploy-vm2.instance_ip_addr
       type        = "ssh"
       user        = "ubuntu"
       private_key = file("~/.ssh/id_rsa")
@@ -114,6 +114,6 @@ resource "null_resource" "execute" {
   depends_on = [
     # Init script must be created before this IP address could
     # actually be used, otherwise the services will be unreachable.
-    module.web-deploy-vm.instance_ip_addr, module.jenkins-vm.instance_ip_addr
+    module.web-deploy-vm2.instance_ip_addr, module.jenkins-vm2.instance_ip_addr
   ]
 }
