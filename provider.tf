@@ -9,6 +9,6 @@ variable "gcp_project" {
 }
 
 provider "google" {
-  project     = "${var.gcp_project}"
-  region      = "us-central1"
+  project = var.gcp_project
+  region  = "us-central1"
 }
